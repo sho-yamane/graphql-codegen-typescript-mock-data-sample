@@ -1,0 +1,28 @@
+overwrite: true
+schema: "https://rickandmortyapi.com/graphql"
+generates:
+  ./src/graphql/types.ts:
+    documents:
+      - "./src/**/*.graphql"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      reactApolloVersion: 3
+      withHOC: false
+      withComponent: false
+      withHooks: true
+  ./schema.graphql:
+    plugins:
+      - "schema-ast"
+    config:
+      includeDirectives: true
+      commentDescriptions: true
+  ./src/graphql/mocks.ts:
+    plugins:
+      - typescript-mock-data:
+          typesFile: "./types.ts"
+          terminateCircularRelationships: true
+          scalars:
+            DateTime: moment
